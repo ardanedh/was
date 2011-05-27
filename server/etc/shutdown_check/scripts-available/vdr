@@ -1,0 +1,4 @@
+#!/bin/sh
+# Checks if VDR (Video Disk Recorder) is active, meaning recording
+# Possible implementation using: http://www.vdr-wiki.de/wiki/index.php/SVDRP
+exit 0

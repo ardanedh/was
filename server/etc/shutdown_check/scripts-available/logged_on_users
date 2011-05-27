@@ -1,0 +1,3 @@
+#!/bin/sh
+# Checks for logged on users
+exit `w -sh | wc -l`
