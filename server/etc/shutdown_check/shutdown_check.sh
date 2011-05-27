@@ -71,7 +71,7 @@ else
 
 	logInfo "Shutting down system, no active clients or services detected!"
 	rm -f $GRACE_COUNT_FILE
-        echo "shutdown -h now;"
+        shutdown -h now;
     else
         let COUNT=$COUNT-1
         setCount $COUNT
