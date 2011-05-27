@@ -8,14 +8,14 @@ HOST_TO_WAKE_MAC="00:33:44:33:44"
 # The network interface from which to send the WOL packet 
 SENDER_NETWORK_IFC="eth0"
 
-# If not using etherwake, set the WOL command to use
-WOL_COMMAND="etherwake -i $SENDER_NETWORK_IFC -b $HOST_TO_WAKE_MAC"
-
 # Load user configuration
 if [ -f /etc/default/was ]
 then
 	. /etc/default/was
 fi
+
+# If not using etherwake, set the WOL command to use
+WOL_COMMAND="etherwake -i $SENDER_NETWORK_IFC -b $HOST_TO_WAKE_MAC"
 
 COMMAND="$1"
 shift
