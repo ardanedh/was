@@ -1,0 +1,19 @@
+on commit {
+	set clientIP = binary-to-ascii(10, 8, ".", leased-address);
+	set clientMAC = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
+
+	execute("/usr/local/sbin/lease_notify.sh", "commit", clientIP, clientMAC);
+}
+
+on release {
+	set clientIP = binary-to-ascii(10, 8, ".", leased-address);
+	set clientMAC = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
+
+	execute("/usr/local/sbin/lease_notify.sh", "release", clientIP, clientMAC);
+}
+
+on expiry {
+	set clientIP = binary-to-ascii(10, 8, ".", leased-address);
+
+	execute("/usr/local/sbin/lease_notify.sh", "expiry", clientIP);
+}

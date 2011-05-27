@@ -1,0 +1,4 @@
+WakeAndSleep: Wake up a specific client using WOL whenever another client requests an IP address from the DHCP server
+
+A set of bash scripts, combined with WOL and the ISC DHCP server
+
