@@ -5,15 +5,15 @@ setCount() {
 }
 
 logInfo() {
-    logger -t "Shutdown Check" -p local5.info $1
+    logger -t "shutdown_check" -p local5.info $1
 }
 
 logError() {
-    logger -t "Shutdown Check" -p local5.err $1
+    logger -t "shutdown_check" -p local5.err $1
 }
 
 logDebug() {
-    logger -t "Shutdown Check" -p local5.debug $1
+    logger -t "shutdown_check" -p local5.debug $1
 }
 
 # The IP range to check. Any valid target range supported by nmap
@@ -71,7 +71,7 @@ else
 
 	logInfo "Shutting down system, no active clients or services detected!"
 	rm -f $GRACE_COUNT_FILE
-        shutdown -h now;
+        /sbin/shutdown -h now;
     else
         let COUNT=$COUNT-1
         setCount $COUNT
