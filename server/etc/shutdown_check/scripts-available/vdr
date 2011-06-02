@@ -1,4 +1,62 @@
-#!/bin/sh
-# Checks if VDR (Video Disk Recorder) is active, meaning recording
-# Possible implementation using: http://www.vdr-wiki.de/wiki/index.php/SVDRP
-exit 0
+#!/bin/bash
+# Checks the status of the VDR (Video Disk Recorder).
+# If no timers are active or imminent, the ACPI wakeup time is set to the beginning 
+# of the next timer
+SVDRPSEND_CMD="/usr/bin/svdrpsend"
+
+# The time limit in seconds after which the system may actually shutdown.
+SHUTDOWN_TIME_LIMIT=300
+
+# The margin to be added to the actual timer for the system to wake up in time
+WAKEALARM_MARGIN=180
+
+# Load user configuration
+[ -f "/etc/default/shutdown_check" ] && . /etc/default/shutdown_check
+
+log() {
+  echo "VDR: $1"
+}
+
+# Set the ACPI Wakeup time. The first param is the seconds since epoch
+# Parts of the script from S99.acpi-shutdown / VDR
+setACPIWake() {
+  ACPI_WAKEALARM=/sys/class/rtc/rtc0/wakealarm
+
+  offset=`expr $1 - $WAKEALARM_MARGIN`
+  next=$(/bin/date --date "now +$offset seconds" "+%s")
+  echo 0 >  $ACPI_WAKEALARM
+  echo $next > $ACPI_WAKEALARM
+  echo $next > $ACPI_WAKEALARM
+}
+
+# the relative time in seconds from now of the next timer. 
+# The value is zero if no timer is set, negative if a timer
+# is running or positiv for a timer in the future
+TIMER_REL=`$SVDRPSEND_CMD NEXT rel | grep -E "^250" | sed 's/^250\s*[0-9]*\s*\([0-9]*\).*/\1/'`
+
+# if no timer is set or another error occured, set default value 0
+[ "$TIMER_REL" ] || TIMER_REL=0
+
+EXITSTATUS=0
+
+if [ $TIMER_REL -eq 0 ] ; then
+  log "shutdown ok, no timer"
+  EXITSTATUS=0
+else 
+  if [ $TIMER_REL -gt 0 ] ; then
+    # timer in the future
+    if [ $TIMER_REL -gt $SHUTDOWN_TIME_LIMIT ] ; then
+      log "timer is past the sleep delay, shutdown ok"
+      setACPIWake $TIMER_REL
+      EXITSTATUS=0
+    else
+      log "timer is within the sleep delay timespan, no shutdown"
+      EXITSTATUS=1
+    fi
+  else
+    log "active timer/recording, no shutdown!"
+    EXITSTATUS=1
+  fi
+fi
+
+exit $EXITSTATUS

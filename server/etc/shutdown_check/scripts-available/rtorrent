@@ -1,0 +1,14 @@
+#!/bin/bash
+# Checks if any active downloads remain in the download directory of rtorrent.
+# If no active downloads are found, SIGINT rtorrent
+
+RTORRENT_DOWNLOAD_DIR="/srv/rtorrent/download"
+
+if [ "$(ls -A $RTORRENT_DOWNLOAD_DIR)" ]; then
+  exit 1;
+else 
+  if [[ -n `pidof rtorrent` ]]; then
+    kill -2 `pidof rtorrent`
+    exit 0;     
+  fi
+fi

@@ -1,3 +1,0 @@
-#!/bin/sh
-# Checks if BackupPC is running a backup job.
-exit `ps -ef | grep BackupPC_dump | grep -vc grep`

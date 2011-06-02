@@ -1,0 +1,15 @@
+#!/bin/sh
+# Checks if certain processes are still running.
+
+# Load user configuration
+[ -f "/etc/default/shutdown_check" ] && . /etc/default/shutdown_check
+
+[ -z "$RUNNING_PROCESSES" ] && exit 0;
+IFS=","
+
+for process in $RUNNING_PROCESSES
+do
+  [ `ps -ef | grep $process | grep -vc grep` != 0 ]  && exit 1;
+done
+
+exit 0
