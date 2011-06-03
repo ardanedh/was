@@ -32,7 +32,8 @@ Runtime dependencies:
    directory
    (example: cd /etc/shutdown_check/scripts-enabled ; ln -s ../scripts-available/vdr . )
 3. Copy 'server/etc/default/shutdown_create' to '/etc/default'
-4. Configure shutdown_check under '/etc/default/shutdown_check'.
-5. Add shutdown_check.sh to cron (Running every x minutes)
-
+4. Copy 'server/usr/local/bin/shutdown_check.sh' to '/usr/local/bin/shutdown_check.sh'
+5. Configure shutdown_check under '/etc/default/shutdown_check'.
+6. Add shutdown_check.sh to cron (Running every x minutes)
+7. Optional: configure scripts under '/etc/shutdown_check/<scriptname>.conf
 
