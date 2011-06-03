@@ -2,7 +2,7 @@
 # Checks if any active downloads remain in the download directory of rtorrent.
 # If no active downloads are found, SIGINT rtorrent
 
-RTORRENT_DOWNLOAD_DIR="/srv/rtorrent/download"
+. /etc/shutdown_check/script_init
 
 if [ "$(ls -A $RTORRENT_DOWNLOAD_DIR)" ]; then
   exit 1;

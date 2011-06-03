@@ -2,16 +2,8 @@
 # Checks the status of the VDR (Video Disk Recorder).
 # If no timers are active or imminent, the ACPI wakeup time is set to the beginning 
 # of the next timer
-SVDRPSEND_CMD="/usr/bin/svdrpsend"
 
-# The time limit in seconds after which the system may actually shutdown.
-SHUTDOWN_TIME_LIMIT=300
-
-# The margin to be added to the actual timer for the system to wake up in time
-WAKEALARM_MARGIN=180
-
-# Load user configuration
-[ -f "/etc/default/shutdown_check" ] && . /etc/default/shutdown_check
+. /etc/shutdown_check/script_init
 
 log() {
   echo "VDR: $1"
@@ -20,8 +12,6 @@ log() {
 # Set the ACPI Wakeup time. The first param is the seconds since epoch
 # Parts of the script from S99.acpi-shutdown / VDR
 setACPIWake() {
-  ACPI_WAKEALARM=/sys/class/rtc/rtc0/wakealarm
-
   offset=`expr $1 - $WAKEALARM_MARGIN`
   next=$(/bin/date --date "now +$offset seconds" "+%s")
   echo 0 >  $ACPI_WAKEALARM
