@@ -13,5 +13,3 @@ GRACE_PERIOD=2
 # Enable debug messages to syslog
 DEBUG=off
 
-# Comma separated list of processes which prevent shutdown of the system
-RUNNING_PROCESSES="rtorrent,BackupPC_dump"
