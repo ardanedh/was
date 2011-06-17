@@ -31,6 +31,7 @@ commit)
 	logger -p local5.info "commit for IP address $IP, MAC $MAC"
 
 	if [[ $IP =~ $IP_REGEX ]]; then
+		logger -p local5.info "Sending WOL paket"
 	        `$WOL_COMMAND`
 	fi
 	;;
