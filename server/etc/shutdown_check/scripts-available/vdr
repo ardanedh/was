@@ -22,7 +22,7 @@ setACPIWake() {
 # the relative time in seconds from now of the next timer. 
 # The value is zero if no timer is set, negative if a timer
 # is running or positiv for a timer in the future
-TIMER_REL=`$SVDRPSEND_CMD NEXT rel | grep -E "^250" | sed 's/^250\s*[0-9]*\s*\(\-*[0-9]*\).*/\1/'`
+TIMER_REL=`$SVDRPSEND_CMD NEXT rel | grep -E "^250" | sed 's/^250\s*[0-9]*\s*\(\-?[0-9]*\).*/\1/'`
 
 # if no timer is set or another error occured, set default value 0
 [ "$TIMER_REL" ] || TIMER_REL=0
