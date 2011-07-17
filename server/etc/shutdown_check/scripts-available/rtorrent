@@ -4,11 +4,12 @@
 
 . /etc/shutdown_check/script_init
 
-if [ "$(ls -A $RTORRENT_DOWNLOAD_DIR)" ]; then
-  exit 1;
-else 
-  if [[ -n `pidof rtorrent` ]]; then
+if [ `pidof rtorrent` ]; then
+  if [ "$(ls -A $RTORRENT_DOWNLOAD_DIR)" ]; then
+    exit 1;
+  else
     kill -2 `pidof rtorrent`
-    exit 0;     
   fi
 fi
+
+exit 0;
