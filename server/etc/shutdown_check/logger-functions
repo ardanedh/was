@@ -1,0 +1,14 @@
+# Logger init functions for shutdown_check scripts
+
+logInfo() {
+    logger -t "shutdown_check" -p local5.info $1
+}
+
+logError() {
+    logger -t "shutdown_check" -p local5.err $1
+}
+
+logDebug() {
+    logger -t "shutdown_check" -p local5.debug $1
+}
+
