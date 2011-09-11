@@ -4,17 +4,8 @@ setCount() {
     echo "COUNT=$1" > $GRACE_COUNT_FILE
 }
 
-logInfo() {
-    logger -t "shutdown_check" -p local5.info $1
-}
-
-logError() {
-    logger -t "shutdown_check" -p local5.err $1
-}
-
-logDebug() {
-    logger -t "shutdown_check" -p local5.debug $1
-}
+# Source logger functions
+. /etc/shutdown_check/logger-functions
 
 # The IP range to check. Any valid target range supported by nmap
 RANGE="192.168.1.0/24"

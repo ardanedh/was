@@ -5,9 +5,8 @@
 
 . /etc/shutdown_check/script_init
 
-log() {
-  echo "VDR: $1"
-}
+# Source logger functions
+. /etc/shutdown_check/logger-functions
 
 # Set the ACPI Wakeup time. The first param is the seconds since epoch
 # Parts of the script from S99.acpi-shutdown / VDR
@@ -34,21 +33,21 @@ fi
 EXITSTATUS=0
 
 if [ $TIMER_REL -eq 0 ] ; then
-  log "shutdown ok, no timer"
+  logInfo "VDR: shutdown ok, no timer"
   EXITSTATUS=0
 else
   if [ $TIMER_REL -gt 0 ] ; then
     # timer in the future
     if [ $TIMER_REL -gt $SHUTDOWN_TIME_LIMIT ] ; then
-      log "timer is past the sleep delay, shutdown ok"
+      logInfo "VDR: timer is past the sleep delay, shutdown ok"
       setACPIWake $TIMER_REL
       EXITSTATUS=0
     else
-      log "timer is within the sleep delay timespan, no shutdown"
+      logInfo "VDR: timer is within the sleep delay timespan, no shutdown"
       EXITSTATUS=1
     fi
   else
-    log "active timer/recording, no shutdown!"
+    logInfo "VDR: active timer/recording, no shutdown!"
     EXITSTATUS=1
   fi
 fi
