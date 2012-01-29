@@ -13,3 +13,5 @@ GRACE_PERIOD=2
 # Enable debug messages to syslog
 DEBUG=off
 
+# Shutdown command to use
+#SHUTDOWN_CMD="/usr/sbin/pm-hibernate"

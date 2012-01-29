@@ -32,6 +32,8 @@ CHECK_SCRIPT_DIR="/etc/shutdown_check/scripts-enabled"
 # Load user configuration
 [ -f "/etc/default/shutdown_check" ] && . /etc/default/shutdown_check
 
+SHUTDOWN_CMD="/sbin/shutdown -h now"
+
 [ -n "$EXCLUDED_HOSTS" ] && EXCLUDE="--exclude $EXCLUDED_HOSTS"
 
 
@@ -62,7 +64,7 @@ else
 
 	logInfo "Shutting down system, no active clients or services detected!"
 	rm -f $GRACE_COUNT_FILE
-        /sbin/shutdown -h now;
+        eval $SHUTDOWN_CMD;
     else
         let COUNT=$COUNT-1
         setCount $COUNT
