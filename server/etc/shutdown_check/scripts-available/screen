@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Returns the number of active or detached screen sessions.
+# Running with root returns all sessions for all users.
+#
+screens=(/var/run/screen/S-*/*)
+numberOfScreens=${#screens[*]}
+exit $numberOfScreens
