@@ -1,5 +1,5 @@
 #!/bin/bash
-# Checks the status of the TVS Tvheadend (TV Streaming Server).
+# Checks the status of Tvheadend (https://tvheadend.org/projects/tvheadend).
 # If no recordings are active or imminent and no users are connected to tvheadend,
 # the ACPI wakeup time is set to the next recording
 #
