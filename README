@@ -1,4 +1,4 @@
 WakeAndSleep: Wake up a specific client using WOL whenever another client requests an IP address from the DHCP server
 
-A set of bash scripts, combined with WOL and the ISC DHCP server
+A set of bash scripts, combined with WOL and the ISC DHCP server, to automatically start a server (providing for example NFS and PVR services) whenever a client pc is started or a PVR recording is imminent. Shuts down the server after client disconnects and no immediate recordings are scheduled.
 
