@@ -1,6 +1,10 @@
 # Begin of generic script initialisation
 SCRIPT_NAME="`basename $0`"
 
+SHUTDOWN_OK=0
+
+SHUTDOWN_NOK=1
+
 # Load default configuration
 [ -f "/etc/shutdown_check/$SCRIPT_NAME.conf" ] && . /etc/shutdown_check/$SCRIPT_NAME.conf
 

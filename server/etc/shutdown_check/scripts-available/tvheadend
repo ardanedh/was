@@ -1,0 +1,45 @@
+#!/bin/bash
+# Checks the status of the TVS Tvheadend (TV Streaming Server).
+# If no recordings are active or imminent and no users are connected to tvheadend,
+# the ACPI wakeup time is set to the next recording
+#
+# Dependency: curl
+#
+
+# wakeup script
+WAKEUP_SCRIPT="/usr/local/bin/was/wakeup"
+
+. /etc/shutdown_check/script_init
+
+# Source logger functions
+. /etc/shutdown_check/logger-functions
+
+rdom () {
+  local IFS=\> ; read -d \< E C ;
+}
+
+EXITSTATUS=$SHUTDOWN_OK
+
+TVHEADEND_STATUS=$(curl --silent $TV_HEADEND_STATUS_XML)
+while rdom; do
+  if [[ $E = start ]]; then
+    logInfo "tvheadend: recording active"
+    EXITSTATUS=$SHUTDOWN_NOK
+    break
+  fi
+  if [[ $E = next ]]; then
+    logInfo "tvheadend: requesting wakeup in $C minutes"
+    EXITSTATUS=$($WAKEUP_SCRIPT $C)
+    break
+  fi
+  if [[ $E = subscriptions ]]; then
+    if [[ $C -gt 0 ]]; then
+      logInfo "tvheadend: $C open subscriptions, no shutdown"
+      EXITSTATUS=$SHUTDOWN_NOK
+      break
+    fi
+  fi
+done <<< "$TVHEADEND_STATUS"
+
+echo "exit st = $EXITSTATUS"
+exit $EXITSTATUS

@@ -15,3 +15,17 @@ DEBUG=off
 
 # Shutdown command to use
 #SHUTDOWN_CMD="/usr/sbin/pm-hibernate"
+
+#
+# Configuration for ACPI wakeup
+#
+
+# The time limit in minutes after which the system may actually shutdown.
+#WAKEUP_SHUTDOWN_TIME_LIMIT=5
+
+# The margin in minutes to be added to the actual wakeup time for the system to wake up in time
+#WAKEUP_WAKEALARM_MARGIN=3
+
+# ACPI wake device node
+#WAKEUP_WAKEALARM_DEVICE=/sys/class/rtc/rtc0/wakealarm
+

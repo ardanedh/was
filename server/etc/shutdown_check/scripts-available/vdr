@@ -8,15 +8,8 @@
 # Source logger functions
 . /etc/shutdown_check/logger-functions
 
-# Set the ACPI Wakeup time. The first param is the seconds since epoch
-# Parts of the script from S99.acpi-shutdown / VDR
-setACPIWake() {
-  offset=`expr $1 - $WAKEALARM_MARGIN`
-  next=$(/bin/date --date "now +$offset seconds" "+%s")
-  echo 0 >  $ACPI_WAKEALARM
-  echo $next > $ACPI_WAKEALARM
-  echo $next > $ACPI_WAKEALARM
-}
+# wakeup script
+WAKEUP_SCRIPT="/usr/local/bin/was/wakeup"
 
 # the relative time in seconds from now of the next timer. 
 # The value is zero if no timer is set, negative if a timer
@@ -24,32 +17,14 @@ setACPIWake() {
 svdrtime=`$SVDRPSEND_CMD NEXT rel | grep -E "^250"`
 regex="^250\s*[0-9]*\s*(\-?[0-9]*).*"
 if [[ $svdrtime =~ $regex ]]; then
-  TIMER_REL=${BASH_REMATCH[1]}
+  vdrNextTimer=${BASH_REMATCH[1]}
+  # convert seconds to minutes
+  vdrNextTimer=$(($vdrNextTimer / 60))
 else
   # if no timer is set or another error occured, set default value 0
-  TIMER_REL=0
+  vdrNextTimer=0
 fi
 
-EXITSTATUS=0
-
-if [ $TIMER_REL -eq 0 ] ; then
-  logInfo "VDR: shutdown ok, no timer"
-  EXITSTATUS=0
-else
-  if [ $TIMER_REL -gt 0 ] ; then
-    # timer in the future
-    if [ $TIMER_REL -gt $SHUTDOWN_TIME_LIMIT ] ; then
-      logInfo "VDR: timer is past the sleep delay, shutdown ok"
-      setACPIWake $TIMER_REL
-      EXITSTATUS=0
-    else
-      logInfo "VDR: timer is within the sleep delay timespan, no shutdown"
-      EXITSTATUS=1
-    fi
-  else
-    logInfo "VDR: active timer/recording, no shutdown!"
-    EXITSTATUS=1
-  fi
-fi
+EXITSTATUS=$($WAKEUP_SCRIPT $vdrNextTimer)
 
 exit $EXITSTATUS

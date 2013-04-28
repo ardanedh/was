@@ -1,0 +1,62 @@
+#!/bin/bash
+# Wakeup script for ACPI
+#
+# Usage: wakeup <time_in_minutes>
+# Where <time_in_minutes> is a positive wakeup time in minutes from the current time 
+# for an upcoming wakeup event,
+# or zero (0) for no wakeup at all
+#
+# Configuration can be changed in /etc/default/shutdown_check
+#
+# The time limit in minutes after which the system may actually shutdown.
+WAKEUP_SHUTDOWN_TIME_LIMIT=5
+
+# The margin in minutes to be added to the actual wakeup time for the system to wake up in time
+WAKEUP_WAKEALARM_MARGIN=3
+
+# ACPI wake device node
+WAKEUP_WAKEALARM_DEVICE=/sys/class/rtc/rtc0/wakealarm
+
+. /etc/shutdown_check/script_init
+
+# Source logger functions
+. /etc/shutdown_check/logger-functions
+
+# Load user configuration
+[ -f "/etc/default/shutdown_check" ] && . /etc/default/shutdown_check
+
+# Set the ACPI Wakeup time.
+# The first param is the minutes from now
+setACPIWake() {
+  offset=`expr $1 - $WAKEUP_WAKEALARM_MARGIN`
+  next=$(/bin/date --date "now +$offset minutes" "+%s")
+  echo 0 >  $WAKEUP_WAKEALARM_DEVICE
+  echo $next > $WAKEUP_WAKEALARM_DEVICE
+  echo $next > $WAKEUP_WAKEALARM_DEVICE
+}
+
+wakeupIn=$1
+
+EXITSTATUS=$SHUTDOWN_OK
+
+if [ $wakeupIn -eq 0 ] ; then
+  logInfo "Wakeup: wakeup time value is zero, allowing shutdown"
+  EXITSTATUS=$SHUTDOWN_OK
+else
+  if [ $wakeupIn -gt 0 ] ; then
+    # timer in the future
+    if [ $wakeupIn -gt $WAKEUP_SHUTDOWN_TIME_LIMIT ] ; then
+      logInfo "Wakeup: wakeup time is past the sleep delay, shutdown ok"
+      setACPIWake $wakeupIn
+      EXITSTATUS=$SHUTDOWN_OK
+    else
+      logInfo "Wakeup: wakeup time is within the sleep delay timespan, no shutdown"
+      EXITSTATUS=$SHUTDOWN_NOK
+    fi
+  else
+    logError "Wakeup: illegal value!"
+    EXITSTATUS=$SHUTDOWN_OK
+  fi
+fi
+
+exit $EXITSTATUS
