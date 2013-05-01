@@ -1,0 +1,27 @@
+Available scripts:
+
+logged_on_users:
+  Checks for logged on users
+
+rtorrent:
+  Checks if any active downloads remain in the download directory of rtorrent.
+  If no active downloads are found, rtorrent is terminated.
+  This script is useful when rtorrent finishes downloads after 
+  a certain criteria is met (download ratio, file downloaded, ...)
+
+running_procs:
+  List processes by name in 'running_procs.conf' which prevent shutdown
+
+screen:
+  Returns the number of active or detached screen sessions, preventing 
+  shutdown if any sessions exist
+
+tvheadend:
+  Checks the status of Tvheadend via the status.xml webui.
+  The script needs a user with web interface and vr access rights defined
+  in Tvheadend. The username and password must be set in 'tvheadend.conf'
+
+vdr:
+  Checks the status of the VDR (Video Disk Recorder).
+  The script needs the path to the svdrpsend script set in 'vdr.conf'
+
