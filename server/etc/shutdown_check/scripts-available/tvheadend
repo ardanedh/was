@@ -20,7 +20,7 @@ rdom () {
 
 EXITSTATUS=$SHUTDOWN_OK
 
-TVHEADEND_STATUS=$(curl --silent -u '$TV_HEADEND_USERNAME':'$TV_HEADEND_PASSWORD' $TV_HEADEND_STATUS_XML)
+TVHEADEND_STATUS=$(curl --silent -u "$TV_HEADEND_USERNAME":"$TV_HEADEND_PASSWORD" $TV_HEADEND_STATUS_XML)
 while rdom; do
   if [[ $E = start ]]; then
     logInfo "tvheadend: recording active"
@@ -41,5 +41,4 @@ while rdom; do
   fi
 done <<< "$TVHEADEND_STATUS"
 
-echo "exit st = $EXITSTATUS"
 exit $EXITSTATUS
