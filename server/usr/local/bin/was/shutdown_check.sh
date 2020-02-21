@@ -32,7 +32,7 @@ CHECK_SCRIPT_DIR="/etc/shutdown_check/scripts-enabled"
 # Load user configuration
 [ -f "/etc/default/shutdown_check" ] && . /etc/default/shutdown_check
 
-SHUTDOWN_CMD="/sbin/shutdown -h now"
+SHUTDOWN_CMD="/usr/local/bin/was/shutdown_cmd.sh"
 
 [ -n "$EXCLUDED_HOSTS" ] && EXCLUDE="--exclude $EXCLUDED_HOSTS"
 
@@ -60,11 +60,10 @@ else
                 logInfo "Script '`basename $script`' reports system still in usage. Not shutting down."
                 exit 0;
             fi
-	done
-
-	logInfo "Shutting down system, no active clients or services detected!"
-	rm -f $GRACE_COUNT_FILE
-        eval $SHUTDOWN_CMD;
+        done
+        logInfo "Shutting down system, no active clients or services detected!"
+        rm -f $GRACE_COUNT_FILE
+        $SHUTDOWN_CMD;
     else
         let COUNT=$COUNT-1
         setCount $COUNT
