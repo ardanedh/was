@@ -1,11 +1,12 @@
+. $WAS_BASE_DIR/logger-functions
+
 # Begin of generic script initialisation
 SCRIPT_NAME="`basename $0`"
 
 SHUTDOWN_OK=0
-
 SHUTDOWN_NOK=1
 
 # Load default configuration
-[ -f "/etc/shutdown_check/$SCRIPT_NAME.conf" ] && . /etc/shutdown_check/$SCRIPT_NAME.conf
+[ -f "$WAS_BASE_DIR/scripts-available-conf/$SCRIPT_NAME.conf" ] && . $WAS_BASE_DIR/scripts-available-conf/$SCRIPT_NAME.conf
 
 # End of generic script initialisation

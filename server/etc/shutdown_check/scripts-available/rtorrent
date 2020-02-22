@@ -2,9 +2,7 @@
 # Checks if any active downloads remain in the download directory of rtorrent.
 # If no active downloads are found, SIGINT rtorrent
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
-. $SCRIPT_DIR/../script_init
+. $WAS_BASE_DIR/script_init
 
 if [ `pidof rtorrent` ]; then
   if [ "$(ls -A $RTORRENT_DOWNLOAD_DIR)" ]; then

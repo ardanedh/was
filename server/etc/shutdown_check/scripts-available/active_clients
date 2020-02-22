@@ -1,15 +1,8 @@
 #!/bin/bash
 # Checks for active clients (IP addresses).
+#
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
-. $SCRIPT_DIR/../script_init
-
-# The IP range to check. Any valid target range supported by nmap
-RANGE="192.168.1.0/24"
-
-# Hosts to exclude from counting. Comma separated list of ip addresses
-EXCLUDED_HOSTS="192.168.1.1"
+. $WAS_BASE_DIR/script_init
 
 [ -n "$EXCLUDED_HOSTS" ] && EXCLUDE="--exclude $EXCLUDED_HOSTS"
 
