@@ -58,6 +58,10 @@ To priorize scripts, the links can be prefixed, for instance:
 /etc/shutdown_check/scripts-enabled/2_active_clients
 ```
 
+### not_between
+
+Prevents shutdown during a certain period of time.
+
 ### active_clients
 
 Checks for active leases (IP addresses) in a specific net.
