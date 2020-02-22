@@ -2,11 +2,12 @@
 
 # Begin of generic script initialisation
 SCRIPT_NAME="`basename $0`"
+CONFIG_NAME=$(echo $SCRIPT_NAME | sed 's/[0-9]*_//')
 
 SHUTDOWN_OK=0
 SHUTDOWN_NOK=1
 
 # Load default configuration
-[ -f "$WAS_BASE_DIR/scripts-available.conf/$SCRIPT_NAME.conf" ] && . $WAS_BASE_DIR/scripts-available.conf/$SCRIPT_NAME.conf
+[ -f "$WAS_BASE_DIR/scripts-available.conf/$CONFIG_NAME.conf" ] && . $WAS_BASE_DIR/scripts-available.conf/$CONFIG_NAME.conf
 
 # End of generic script initialisation
