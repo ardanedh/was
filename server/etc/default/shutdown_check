@@ -4,8 +4,7 @@
 DEBUG=on
 
 # Shutdown command to use
-#SHUTDOWN_CMD="/usr/local/bin/was/shutdown_cmd.sh"
-SHUTDOWN_CMD="echo xxxxxxxxxxxxxx: Shutdown!"
+SHUTDOWN_CMD="/usr/local/bin/was/shutdown_cmd.sh"
 
 #
 # Configuration for ACPI wakeup

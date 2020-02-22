@@ -1,7 +1,7 @@
 #!/bin/bash
 
-WAS_BASE_DIR=${WAS_BASE_DIR:=/etc/shutdown_check}
-WAS_DEFAULT_CONF=${WAS_DEFAULT_CONF:=/etc/default/shutdown_check}
+export WAS_BASE_DIR=${WAS_BASE_DIR:=/etc/shutdown_check}
+export WAS_DEFAULT_CONF=${WAS_DEFAULT_CONF:=/etc/default/shutdown_check}
 
 # Source logger functions
 . $WAS_BASE_DIR/logger-functions
