@@ -7,6 +7,6 @@ SHUTDOWN_OK=0
 SHUTDOWN_NOK=1
 
 # Load default configuration
-[ -f "$WAS_BASE_DIR/scripts-available-conf/$SCRIPT_NAME.conf" ] && . $WAS_BASE_DIR/scripts-available-conf/$SCRIPT_NAME.conf
+[ -f "$WAS_BASE_DIR/scripts-available.conf/$SCRIPT_NAME.conf" ] && . $WAS_BASE_DIR/scripts-available.conf/$SCRIPT_NAME.conf
 
 # End of generic script initialisation
