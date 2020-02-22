@@ -7,7 +7,6 @@
 #
 
 . $WAS_BASE_DIR/script_init
-. $WAS_BASE_DIR/logger-functions
 
 # wakeup script
 WAKEUP_SCRIPT="/usr/local/bin/was/wakeup"

@@ -52,6 +52,16 @@ Runtime dependencies:
 Available scripts are under `/etc/shutdown_check/scripts-available` and
 can be symlinked to the `/etc/shutdown_check/scripts-enabled`
 
+To priorize scripts, the links can be prefixed, for instance:
+```
+/etc/shutdown_check/scripts-enabled/1_not_between
+/etc/shutdown_check/scripts-enabled/2_active_clients
+```
+
+### active_clients
+
+Checks for active leases (IP addresses) in a specific net.
+
 ### logged_on_users
 
 Checks for logged on users

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+. $WAS_BASE_DIR/script_init
+
+CURRENT_TIME=$(date +%H%M)
+
+if [[ "$CURRENT_TIME" > "$TIME_FROM" ]] || [[ "$CURRENT_TIME" < "$TIME_TO" ]]; then
+    logInfo "not_between: current time: $CURRENT_TIME - no shutdown between $TIME_FROM and $TIME_TO";
+    exit 1;
+fi

@@ -1,9 +1,5 @@
 # Configuration for shutdown_check.sh
 
-# Grace period after which the shutdown is initiated.
-# Allows the active client count to reach zero for the number of times indicated.
-GRACE_PERIOD=3
-
 # Enable debug messages to syslog
 DEBUG=on
 
