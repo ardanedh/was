@@ -3,10 +3,10 @@
 # If no timers are active or imminent, the ACPI wakeup time is set to the beginning 
 # of the next timer
 
-. /etc/shutdown_check/script_init
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Source logger functions
-. /etc/shutdown_check/logger-functions
+. $SCRIPT_DIR/../script_init
+. $SCRIPT_DIR/../logger-functions
 
 # wakeup script
 WAKEUP_SCRIPT="/usr/local/bin/was/wakeup"

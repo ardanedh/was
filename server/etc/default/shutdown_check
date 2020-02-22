@@ -1,17 +1,18 @@
 # Configuration for shutdown_check.sh
 
 # The IP range to check. Any valid target range supported by nmap
+#RANGE="192.168.1.0/24 192.168.2.102"
 RANGE="192.168.1.0/24"
 
 # Hosts to exclude from counting. Comma separated list of ip addresses
-#EXCLUDED_HOSTS="192.168.1.1"
+EXCLUDED_HOSTS="192.168.1.1,192.168.1.101,192.168.1.70,192.168.1.61,192.168.1.60,192.168.1.50"
 
 # Grace period after which the shutdown is initiated.
 # Allows the active client count to reach zero for the number of times indicated.
-GRACE_PERIOD=2
+GRACE_PERIOD=1
 
 # Enable debug messages to syslog
-DEBUG=off
+DEBUG=on
 
 # Shutdown command to use
 #SHUTDOWN_CMD="/usr/sbin/pm-hibernate"

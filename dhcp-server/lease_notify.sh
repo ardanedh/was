@@ -8,9 +8,6 @@ HOST_TO_WAKE_MAC="00:33:44:33:44"
 # The network interface from which to send the WOL packet 
 SENDER_NETWORK_IFC="eth0"
 
-# Which IPs trigger a WOL
-IP_REGEX="192\.168\.1\.[0-9]+"
-
 # Load user configuration
 if [ -f /etc/default/was ]
 then
@@ -29,11 +26,7 @@ MAC="$1"
 case $COMMAND in
 commit)
 	logger -p local5.info "commit for IP address $IP, MAC $MAC"
-
-	if [[ $IP =~ $IP_REGEX ]]; then
-		logger -p local5.info "Sending WOL paket"
-	        `$WOL_COMMAND`
-	fi
+	`$WOL_COMMAND`
 	;;
 release)
 	logger -p local5.info "release for IP address $IP, MAC $MAC"
