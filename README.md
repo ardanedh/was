@@ -58,6 +58,10 @@ To priorize scripts, the links can be prefixed, for instance:
 /etc/shutdown_check/scripts-enabled/2_active_clients
 ```
 
+### nextcloud
+
+Checks for active user sessions on a running Nextcloud server.
+
 ### not_between
 
 Prevents shutdown during a certain period of time.

@@ -1,0 +1,26 @@
+#!/bin/bash
+# Checks the status of nextcloud, specifically the number of logged in users
+#
+
+. $WAS_BASE_DIR/script_init
+
+response=$(curl -s -u $NEXTCLOUD__USERNAME:$NEXTCLOUD__PASSWORD -X GET 'http://nextcloud/ocs/v2.php/apps/serverinfo/api/v1/info?format=json' -H "OCS-APIRequest: true")
+statusCode=$(echo $response | jq '.ocs.meta.statuscode')
+
+if [ "$statusCode" -eq "200" ]
+then
+    numOfUsers=$(echo $response | jq '.ocs.data.activeUsers.last5minutes')
+    logInfo "nextcloud: Number of users still reported active: $numOfUsers"
+    
+    if [ "$numOfUsers" -eq "$NEXTCLOUD_SHUTDOWN_USER_NUMBER" ]
+    then
+        logInfo "nextcloud: No more active users, allow shutdown";
+        exit 0;
+    else
+        logInfo "nextcloud: active users ($numOfUsers), no shutdown";
+        exit 1;
+    fi
+else
+    logError "nextcloud: Status check failed with return code $statusCode!"
+    exit 0;
+fi
