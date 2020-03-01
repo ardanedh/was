@@ -36,7 +36,8 @@ Runtime dependencies:
 - nmap
 - bash
 - cron
-- curl (for tvheadend script)
+- curl (tvheadend, nextcloud)
+- jq (nextcloud)
 
 1. Copy `server/etc/shutdown_create` to `/etc/`
 2. Enable additional shutdown checks by symlinking available scripts to the 
