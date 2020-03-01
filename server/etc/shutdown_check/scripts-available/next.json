@@ -1,0 +1,10 @@
+{
+    "ocs": {
+        "meta": {
+            "status": "failure",
+            "statuscode": 997,
+            "message": "Current user is not logged in"
+        },
+        "data": []
+    }
+}
